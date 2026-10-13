@@ -69,6 +69,12 @@ Page text: `index.html`, `tools/index.html`, `courses/index.html`. Shared naviga
 
 Repository: https://github.com/Mustafa-Aljasim/petroleumacademia
 
+Live site: https://petroleumacademia.vercel.app/
+
+Vercel project: https://vercel.com/mustafa-aljasims-projects/petroleumacademia
+
+The repository is connected and the production branch is `main`. The first production deployment succeeded on October 13, 2026. Direct visits and refreshes on all three routes were verified.
+
 ```powershell
 git status
 git add index.html tools courses data assets tests config.js shared.js script.js language.js catalog.js styles.css vercel.json sitemap.xml robots.txt README.md .gitignore
@@ -81,6 +87,14 @@ For initial deployment, import the repository in Vercel (**Add New → Project**
 After pushing, find the matching commit under Vercel **Deployments** and wait for **Ready**. Visit and refresh `/`, `/tools/`, `/courses/` directly. Real directory `index.html` files serve all routes without a backend or SPA fallback. Check mobile navigation, language switching and real external destinations.
 
 Add `petroleumacademia.com` under **Settings → Domains**. Copy the exact DNS types and values Vercel displays to the domain provider, preserving unrelated mail records. Wait for verification and HTTPS. Optionally add `www` with a redirect to the apex domain. Canonical URLs, social metadata, robots and sitemap already use this domain.
+
+`petroleumacademia.com` has already been added to this project's Production environment. Vercel currently requests this record at **Namecheap** (verified October 13, 2026):
+
+| Type | Host | Value |
+| --- | --- | --- |
+| A | @ | 216.198.79.1 |
+
+Update the existing website A record for `@` to that value; remove conflicting website records for the same host while preserving mail records. DNS changes are still pending. Check the project's Domains settings for current values before making changes, then wait for Valid Configuration and HTTPS issuance. `www` has not been added.
 
 Official guidance: https://vercel.com/docs/git/vercel-for-github
 
