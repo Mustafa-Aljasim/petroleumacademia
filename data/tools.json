@@ -1,12 +1,12 @@
 [
   {
-    "published": false,
-    "title": "Sample tool — replace before publishing",
+    "published": true,
+    "title": "Interactive Decline Curve Analysis + WOR Forecast",
     "title_ar": "مثال لأداة — يُستبدل قبل النشر",
-    "description": "Optional short description.",
-    "description_ar": "وصف مختصر اختياري.",
-    "category": "Example category — replace before publishing",
+    "description": "This tools helps you calculate the decline using different methods, as well as water-cut forecasting",
+    "description_ar": "اداة هندسية تساعد في حساب معدل التناقص في الانتاج باستخدام عدة طرق بالاضافة الى حساب نسبة تصاعد الماء بالنسبة للنفط",
+    "category": "reservoir-engineering",
     "labels": ["Example label", "Replace with actual details"],
-    "url": ""
+    "url": "https://decline.streamlit.app/"
   }
 ]
