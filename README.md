@@ -206,3 +206,12 @@ Copy and edit this object inside the array in `data/tools.json`. This is an unpu
 `description`, `category` and `labels` are optional. Omit them, use empty strings, or use `labels: []` to show only the existing title and Open Tool button. Labels must be an array of strings; blank and non-string values are ignored. Only enter labels supported by the actual tool; the site does not infer pricing, account requirements or validation claims. Optional `description_ar`, `category_ar` and `labels_ar` supply Arabic text. All content is rendered as plain text; existing title, URL and publication behavior remain unchanged.
 
 Publish with `git add data/tools.json`, `git commit -m "Update tool details"`, and `git push origin main`. Verify the matching deployment is Ready in Vercel, then refresh `/tools/`.
+# Home founder profile
+
+Edit `data/founder.json`. The initial published profile uses the founder text provided by Eng. Mustafa Aljasim, with no invented portrait or LinkedIn URL. Set `published` to `false` to hide it. Name, role and bio are required and render as plain text. Optional `name_ar`, `role_ar` and `bio_ar` supply Arabic copy; otherwise the supplied text remains unchanged.
+
+To add a portrait, put your actual image in `assets/`, for example `assets/founder.jpg`, then set `"photoPath": "/assets/founder.jpg"`. Supported local formats: JPG/JPEG, PNG, WebP, AVIF and GIF. External URLs and filesystem paths are rejected. The image is displayed only after loading successfully, with alternative text using the founder's name. A missing/invalid image leaves the clean text-only card with no broken-image icon. Leave `photoPath` empty for no portrait.
+
+Set `linkedinUrl` to your actual `https://www.linkedin.com/in/...` profile URL to display Connect on LinkedIn. Leave it empty to omit the button. Only HTTP/HTTPS profile links on linkedin.com or www.linkedin.com are accepted; no profile URL is inferred.
+
+After editing, run `git add data/founder.json assets`, `git commit -m "Update founder profile"`, and `git push origin main`. Wait for the Vercel deployment to be Ready, then refresh Home. The section sits immediately after About; other pages do not load this profile.
