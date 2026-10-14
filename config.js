@@ -3,6 +3,8 @@
    Phone uses the supplied local number; update href to international format
    when you confirm the country code. Email becomes a direct mailto: link. */
 window.PA_CONFIG = {
+  // Public Formspree form endpoint, not an API key. Configure recipient in Formspree.
+  contactFormEndpoint: '',
   social: {
     linkedin: 'https://www.linkedin.com/company/petroleumacademia',
     instagram: 'https://www.instagram.com/petroleum_academia/',

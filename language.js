@@ -3,6 +3,22 @@
   // English text is authored in index.html; its Arabic equivalents live here.
   // Keep dictionary keys in sync when changing English copy.
   const arabic = {
+    '100 characters maximum': 'الحد الأقصى 100 حرف', '160 characters maximum': 'الحد الأقصى 160 حرف', '5000 characters maximum': 'الحد الأقصى 5000 حرف',
+    'Upcoming Events': 'الفعاليات القادمة', 'Contact': 'تواصل معنا',
+    'UPCOMING EVENTS': 'الفعاليات القادمة', 'Make time for learning.': 'خصص وقتًا للتعلّم.',
+    'Your next session.': 'جلستك القادمة.',
+    'Lecture and course schedules, with live countdowns in Baghdad time.': 'مواعيد المحاضرات والدورات مع عدّ تنازلي مباشر بتوقيت بغداد.',
+    'CONTACT': 'تواصل معنا', 'Start a conversation.': 'لنبدأ حوارًا.',
+    'We’re here to help.': 'نحن هنا لمساعدتك.',
+    'Ask about a course, request a consultation, or get support with a tool.': 'استفسر عن دورة أو اطلب استشارة أو احصل على مساعدة بشأن أداة.',
+    'Name': 'الاسم', 'Request type': 'نوع الطلب', 'Subject': 'الموضوع', 'Message': 'الرسالة',
+    'Consultation': 'استشارة', 'Course inquiry': 'استفسار عن دورة', 'Tool support': 'دعم الأدوات', 'Other': 'أخرى',
+    'Send message': 'أرسل الرسالة',
+    'All fields except request type are required.': 'جميع الحقول باستثناء نوع الطلب مطلوبة.',
+    'Your contact details are used to respond to your request. Submissions are processed by Formspree.': 'تُستخدم بيانات التواصل للرد على طلبك. تعالج خدمة Formspree الرسائل المُرسلة.',
+    'The contact form is currently unavailable.': 'نموذج التواصل غير متاح حاليًا.',
+    'Please use direct email instead.': 'يرجى التواصل مباشرة عبر البريد الإلكتروني.',
+    'Email us directly': 'راسلنا مباشرة',
     'Home': 'الرئيسية', 'Tools': 'الأدوات', 'Courses & Lectures': 'الدورات والمحاضرات',
     'ENGINEERING TOOLKIT': 'أدوات هندسية', 'Engineering tools.': 'أدوات هندسية.',
     'Practical applications.': 'تطبيقات عملية.',
@@ -102,8 +118,8 @@
     document.documentElement.dir = isArabic ? 'rtl' : 'ltr';
     textEntries.forEach(entry => { entry.node.nodeValue = isArabic ? entry.translated : entry.original; });
     attributes.forEach(entry => entry.element.setAttribute(entry.name, isArabic ? entry.translated : entry.original));
-    const pageName = document.getElementById('catalog')?.dataset.kind;
-    document.title = isArabic ? `${pageName === 'tools' ? 'الأدوات' : pageName === 'courses' ? 'الدورات والمحاضرات' : 'تعليم عملي في هندسة النفط'} | بتروليوم أكاديميا` : originalTitle;
+    const pageName = document.getElementById('catalog')?.dataset.kind || document.body.dataset.page;
+    document.title = isArabic ? `${pageName === 'tools' ? 'الأدوات' : pageName === 'courses' ? 'الدورات والمحاضرات' : pageName === 'upcoming' ? 'الفعاليات القادمة' : pageName === 'contact' ? 'تواصل معنا' : 'تعليم عملي في هندسة النفط'} | بتروليوم أكاديميا` : originalTitle;
     description.content = isArabic ? 'مصادر تعليمية ودورات وأدوات عملية في هندسة النفط مع التركيز على هندسة المكامن. تواصل مع بتروليوم أكاديميا.' : originalDescription;
     button.setAttribute('aria-label', isArabic ? 'Switch to English' : 'التبديل إلى العربية');
     button.title = isArabic ? 'Switch to English' : 'التبديل إلى العربية';

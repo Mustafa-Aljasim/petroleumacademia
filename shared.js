@@ -1,7 +1,7 @@
 'use strict';
 (() => {
-  // One shared navigation and footer for all three static pages.
-  const routes = [['/', 'Home'], ['/tools/', 'Tools'], ['/courses/', 'Courses & Lectures'], ['/#contact', 'Let’s connect']];
+  // One shared navigation and footer for all five static pages.
+  const routes = [['/', 'Home'], ['/tools/', 'Tools'], ['/courses/', 'Courses & Lectures'], ['/upcoming/', 'Upcoming Events'], ['/contact/', 'Contact']];
   const nav = document.querySelector('nav');
   const toggle = document.getElementById('language-toggle');
   nav.replaceChildren();
@@ -14,7 +14,7 @@
   nav.append(toggle);
   const footer = document.querySelector('footer');
   const links = document.createElement('div'); links.className = 'footer-links';
-  routes.slice(0,3).forEach(([href, title]) => { const link = document.createElement('a'); link.href = href; link.textContent = title; links.append(link); });
+  routes.forEach(([href, title]) => { const link = document.createElement('a'); link.href = href; link.textContent = title; links.append(link); });
   footer.querySelector('p')?.replaceWith(links);
   footer.querySelector('.footer-brand').href = '/';
   document.querySelector('.brand').href = '/';

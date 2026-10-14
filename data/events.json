@@ -1,0 +1,13 @@
+[
+  {
+    "id": "unpublished-example",
+    "topic": "Example only — replace before publishing",
+    "instructor": "",
+    "description": "This is a format example, not a scheduled event.",
+    "startAt": "2026-11-20T19:00:00+03:00",
+    "endAt": "2026-11-20T20:00:00+03:00",
+    "destinationUrl": "",
+    "buttonLabel": "",
+    "published": false
+  }
+]
