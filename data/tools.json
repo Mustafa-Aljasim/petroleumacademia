@@ -5,6 +5,8 @@
     "title_ar": "مثال لأداة — يُستبدل قبل النشر",
     "description": "Optional short description.",
     "description_ar": "وصف مختصر اختياري.",
+    "category": "Example category — replace before publishing",
+    "labels": ["Example label", "Replace with actual details"],
     "url": ""
   }
 ]

@@ -188,3 +188,21 @@ git push origin main
 ```
 
 Wait for the matching Git commit to show Ready in Vercel, then refresh Home. Preview locally with the existing HTTP-server instructions. Only Home loads this file and displays the card directly below its hero.
+# Optional tool descriptions, categories and labels
+
+Copy and edit this object inside the array in `data/tools.json`. This is an unpublished format example; replace its content and URL with actual tool details before setting `published` to `true`.
+
+```json
+{
+  "published": false,
+  "title": "Your actual tool title",
+  "url": "https://example.com/replace-with-real-tool-url",
+  "description": "Optional short explanation of the tool.",
+  "category": "Reservoir Surveillance",
+  "labels": ["Educational", "Requires account"]
+}
+```
+
+`description`, `category` and `labels` are optional. Omit them, use empty strings, or use `labels: []` to show only the existing title and Open Tool button. Labels must be an array of strings; blank and non-string values are ignored. Only enter labels supported by the actual tool; the site does not infer pricing, account requirements or validation claims. Optional `description_ar`, `category_ar` and `labels_ar` supply Arabic text. All content is rendered as plain text; existing title, URL and publication behavior remain unchanged.
+
+Publish with `git add data/tools.json`, `git commit -m "Update tool details"`, and `git push origin main`. Verify the matching deployment is Ready in Vercel, then refresh `/tools/`.

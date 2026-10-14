@@ -19,6 +19,22 @@ async function render(kind,data,{failure=false,language='en'}={}){
   await new Promise(resolve=>setImmediate(resolve));return {root,window,events};
 }
 function all(node){return [node,...node.children.flatMap(all)];}
+test('minimal tools retain title and Open Tool without empty optional containers',async()=>{
+  const {root}=await render('tools',[{published:true,title:'Minimal tool',url:'https://example.com/tool'},{published:true,title:'Empty optional fields',url:'https://example.com/other',description:' ',category:'',labels:['',null,' ']}]);
+  const nodes=all(root);assert.equal(nodes.filter(n=>n.tag==='h2').length,2);assert.equal(nodes.filter(n=>n.tag==='a').length,2);
+  assert.equal(nodes.filter(n=>n.tag==='ul'||n.tag==='p').length,0);assert.ok(nodes.filter(n=>n.tag==='a').every(n=>n.textContent==='Open Tool ↗'));
+});
+test('tool metadata and badges render literally and ignore invalid label values',async()=>{
+  const {root}=await render('tools',[{published:true,title:'Tool',url:'https://example.com',category:'PTA <b>category</b>',description:'Description <img src=x>',labels:['Free','<script>literal</script>',null,42,' ']}]);
+  const nodes=all(root);assert.equal(nodes.find(n=>n.className==='tool-category').textContent,'PTA <b>category</b>');
+  assert.deepEqual(nodes.filter(n=>n.tag==='li').map(n=>n.textContent),['Free','<script>literal</script>']);
+  assert.equal(nodes.filter(n=>n.tag==='a').length,1);
+});
+test('tool optional metadata is isolated from courses and supports supplied Arabic text',async()=>{
+  const item={published:true,title:'Tool',url:'https://example.com',category:'PTA',category_ar:'تحليل الضغط',labels:['Educational'],labels_ar:['تعليمي']};
+  const {root}=await render('tools',[item],{language:'ar'});assert.equal(all(root).find(n=>n.className==='tool-category').textContent,'تحليل الضغط');assert.equal(all(root).find(n=>n.tag==='li').textContent,'تعليمي');
+  const course=await render('courses',[item]);assert.equal(all(course.root).filter(n=>n.className==='tool-category'||n.tag==='ul').length,0);
+});
 test('tools require publishing and safe URL; titles are literal text',async()=>{
   const {root}=await render('tools',[
     {published:false,title:'Hidden',url:'https://example.com'},

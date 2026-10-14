@@ -34,7 +34,17 @@
       const card = element('article', '', 'catalog-card');
       if (kind === 'courses' && text(item.status)) card.append(element('span', t[text(item.status)] || localized(item, 'status'), 'course-status'));
       card.append(element('h2', localized(item, 'title')));
+      if (kind === 'tools' && localized(item, 'category')) card.append(element('p', localized(item, 'category'), 'tool-category'));
       if (localized(item, 'description')) card.append(element('p', localized(item, 'description')));
+      if (kind === 'tools') {
+        const source = language === 'ar' && Array.isArray(item.labels_ar) ? item.labels_ar : item.labels;
+        const labels = Array.isArray(source) ? source.map(text).filter(Boolean) : [];
+        if (labels.length) {
+          const badges = element('ul', '', 'tool-labels');
+          labels.forEach(label => badges.append(element('li', label, 'tool-label')));
+          card.append(badges);
+        }
+      }
       if (kind === 'courses') {
         const fields = element('dl', '', 'course-fields');
         ['instructor','format','date','price'].forEach(key => {
