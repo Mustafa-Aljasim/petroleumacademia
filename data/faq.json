@@ -1,0 +1,26 @@
+[
+  {
+    "id": "engineering-tools",
+    "question": "How do I access the engineering tools?",
+    "answer": "Visit the Tools page and select “Open Tool” for the application you want to explore. Check its description and labels for access details.",
+    "published": true
+  },
+  {
+    "id": "upcoming-lectures",
+    "question": "Where can I find upcoming lectures?",
+    "answer": "Visit Upcoming Events to view scheduled topics, instructors, and countdowns. Registration and joining links appear when available.",
+    "published": true
+  },
+  {
+    "id": "datasets-templates",
+    "question": "Where can I find datasets and templates?",
+    "answer": "Visit Free Resources to explore the published datasets, templates, and learning materials.",
+    "published": true
+  },
+  {
+    "id": "consultation-inquiries",
+    "question": "How can I request a consultation or send an inquiry?",
+    "answer": "Use the Contact page to send your request. Describe your topic and what you need help with.",
+    "published": true
+  }
+]

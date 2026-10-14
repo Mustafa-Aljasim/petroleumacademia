@@ -280,3 +280,21 @@ git push origin main
 ```
 
 Check the matching Vercel deployment is Ready, then directly visit and refresh `/resources/` and test your real file links. Preview locally using the existing HTTP-server command. Files under downloads are public; add only files you intend to distribute.
+# Home FAQ
+
+Edit the array in `data/faq.json`. The four initial published questions use the supplied text. FAQ appears on Home above the footer; there is no separate FAQ page.
+
+```json
+{
+  "id": "unique-question-id",
+  "question": "Your question",
+  "answer": "Your plain-text answer",
+  "published": true
+}
+```
+
+**Add:** insert an object separated by a comma. **Edit:** change question/answer. **Reorder:** move objects within the array; the display keeps file order. **Hide:** set published false. **Remove:** delete the object and its separating comma. An empty array, all unpublished entries, or a loading failure hides the whole section. Entries need unique nonempty ids, questions and answers. Plain text renders literally; newlines in answers are supported using JSON `\n` escapes. Optional `question_ar` and `answer_ar` provide Arabic translations; otherwise the supplied English text remains unchanged.
+
+Questions use native HTML details/summary: Tab focuses each summary, Enter or Space expands/collapses it, and multiple answers can stay open. Visible focus and responsive text styles are included. No pricing, certificate or accreditation policies are inferred.
+
+Publish with `git add data/faq.json`, `git commit -m "Update FAQ"`, `git push origin main`, then verify Vercel is Ready and refresh Home. Run `node --test tests/faq.test.cjs` for rendering, ordering and hidden/error states.
