@@ -6,7 +6,7 @@
     "description": "This tools helps you calculate the decline using different methods, as well as water-cut forecasting",
     "description_ar": "اداة هندسية تساعد في حساب معدل التناقص في الانتاج باستخدام عدة طرق بالاضافة الى حساب نسبة تصاعد الماء بالنسبة للنفط",
     "category": "reservoir-engineering",
-    "labels": ["Example label", "Replace with actual details"],
+    "labels": ["DCA", "Reservoir engineering"],
     "url": "https://decline.streamlit.app/"
   }
 ]
