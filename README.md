@@ -215,3 +215,24 @@ To add a portrait, put your actual image in `assets/`, for example `assets/found
 Set `linkedinUrl` to your actual `https://www.linkedin.com/in/...` profile URL to display Connect on LinkedIn. Leave it empty to omit the button. Only HTTP/HTTPS profile links on linkedin.com or www.linkedin.com are accepted; no profile URL is inferred.
 
 After editing, run `git add data/founder.json assets`, `git commit -m "Update founder profile"`, and `git push origin main`. Wait for the Vercel deployment to be Ready, then refresh Home. The section sits immediately after About; other pages do not load this profile.
+# Event calendars and registration
+
+Every published, valid event that has not ended has an Add to Calendar button. It generates an `.ics` download in the browser; no backend or calendar API is needed. Calendar title is the topic, notes contain instructor, description and `https://petroleumacademia.com/upcoming/` so visitors can return for the joining link. The destinationUrl is never included in the file, even after release. Public JSON remains discoverable; calendar support does not add access protection.
+
+Optional event fields:
+
+```json
+{
+  "durationMinutes": 90,
+  "registrationUrl": "",
+  "location": ""
+}
+```
+
+Add these fields to an existing object in `data/events.json`. Use actual registration and location details only; blank values are omitted. A valid HTTP/HTTPS registrationUrl displays View details / Register **before startAt only**. At start, the original joining-link behavior takes over. At end, registration, joining and calendar buttons are omitted. No endAt means joining/calendar remain available after start, as before.
+
+The calendar uses endAt when provided. Otherwise a positive numeric durationMinutes sets its end; an absent or invalid duration defaults to **60 minutes**. This duration affects the calendar only, not the website's event-ended state. Explicit-offset timestamps convert to UTC: the illustrative Baghdad start `2026-11-20T19:00:00+03:00` becomes `20261120T160000Z` in the calendar. It is not an actual scheduled event.
+
+Files use stable UIDs derived from event id plus petroleumacademia.com, escaped text, CRLF line endings and UTF-8-safe folding at 75 octets per physical line per RFC 5545 (https://www.rfc-editor.org/rfc/rfc5545). Keep event ids unchanged when editing the same event. Downloaded calendar entries do not update automatically when JSON changes; visitors must reimport updates (handling duplicate UIDs depends on their calendar app).
+
+Edit `data/events.json`, then commit and push to main using the existing instructions. Check with `node --test tests/calendar.test.cjs tests/events.test.cjs`.

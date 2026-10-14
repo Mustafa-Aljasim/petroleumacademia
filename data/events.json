@@ -6,6 +6,9 @@
     "description": "This is a format example, not a scheduled event.",
     "startAt": "2026-11-20T19:00:00+03:00",
     "endAt": "2026-11-20T20:00:00+03:00",
+    "durationMinutes": 60,
+    "registrationUrl": "",
+    "location": "",
     "destinationUrl": "",
     "buttonLabel": "",
     "published": false

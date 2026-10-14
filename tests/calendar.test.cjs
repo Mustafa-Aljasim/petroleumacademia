@@ -1,0 +1,23 @@
+const {test}=require('node:test');const assert=require('node:assert/strict');const model=require('../event-model.js');
+const vm=require('node:vm'),fs=require('node:fs');
+async function renderAt(now,registrationUrl='https://example.com/register'){
+  class El{constructor(tag){this.tag=tag;this.children=[];this.attrs={};this.listeners={};}append(...nodes){this.children.push(...nodes);}replaceChildren(){this.children=[];}setAttribute(k,v){this.attrs[k]=v;}addEventListener(k,fn){this.listeners[k]=fn;}get childElementCount(){return this.children.length;}}
+  const root=new El('div');class Clock extends Date{static now(){return now;}}
+  const data={id:'test',topic:'QA fixture',instructor:'QA fixture',startAt:'2026-11-20T19:00:00+03:00',endAt:'2026-11-20T20:00:00+03:00',destinationUrl:'https://example.com/join',registrationUrl,published:true};
+  vm.runInNewContext(fs.readFileSync('events.js','utf8'),{Date:Clock,Intl,window:{PA_EVENTS:model,PA_LANGUAGE:'en',addEventListener(){}},document:{getElementById:()=>root,createElement:tag=>new El(tag),addEventListener(){}},setInterval(){},fetch:async()=>({ok:true,json:async()=>[data]})});
+  await new Promise(r=>setImmediate(r));const all=e=>[e,...e.children.flatMap(all)];return all(root);
+}
+test('pre-start registration, join release and ended calendar visibility',async()=>{
+  const start=Date.parse('2026-11-20T19:00:00+03:00');
+  const before=await renderAt(start-1);assert.equal(before.filter(e=>e.tag==='button').length,1);assert.deepEqual(before.filter(e=>e.tag==='a').map(e=>e.href),['https://example.com/register']);assert.ok(before.some(e=>e.className==='countdown'));
+  const at=await renderAt(start);assert.equal(at.filter(e=>e.tag==='button').length,1);assert.deepEqual(at.filter(e=>e.tag==='a').map(e=>e.href),['https://example.com/join']);assert.ok(at.some(e=>e.textContent==='Available now'));
+  const ended=await renderAt(start+3600000);assert.equal(ended.filter(e=>e.tag==='button'||e.tag==='a').length,0);assert.ok(ended.some(e=>e.textContent==='Event ended'));
+  for(const url of ['', 'javascript:alert(1)'])assert.equal((await renderAt(start-1,url)).filter(e=>e.tag==='a').length,0);
+});
+const event=()=>model.normalize([{id:'lecture-1',topic:'Title, semi; slash\\ and\nline',instructor:'Instructor',description:'Description, with; characters\\\nand العربية 🛢️',startAt:'2026-11-20T19:00:00+03:00',destinationUrl:'https://example.com/hidden-joining-link',published:true}]).events[0];
+const unfold=s=>s.replace(/\r\n[ \t]/g,'');
+test('Baghdad converts to UTC and defaults to 60 minutes without changing release state',()=>{const e=event(),ics=unfold(model.calendarFile(e,e.start-1000));assert.match(ics,/DTSTART:20261120T160000Z/);assert.match(ics,/DTEND:20261120T170000Z/);assert.equal(model.stateAt(e,e.start+7200000),'available');assert.match(ics,/UID:6c6563747572652d31@petroleumacademia.com/);assert.ok(!ics.includes(e.destinationUrl));assert.ok(ics.includes('https://petroleumacademia.com/upcoming/'));});
+test('explicit end overrides duration; positive duration overrides default',()=>{const e=event();assert.match(model.calendarFile({...e,durationMinutes:90}),/DTEND:20261120T173000Z/);assert.match(model.calendarFile({...e,end:Date.parse('2026-11-20T21:00:00+03:00'),durationMinutes:90}),/DTEND:20261120T180000Z/);for(const value of [0,-5,'90',null,Infinity])assert.match(model.calendarFile({...e,durationMinutes:value}),/DTEND:20261120T170000Z/);});
+test('escaped text, optional location and UTC offsets',()=>{const e=event(),ics=unfold(model.calendarFile({...e,location:'Room A, B; upstairs'}));assert.ok(ics.includes('SUMMARY:Title\\, semi\\; slash\\\\ and\\nline'));assert.ok(ics.includes('LOCATION:Room A\\, B\\; upstairs'));assert.ok(ics.includes('Instructor: Instructor'));assert.ok(ics.includes('العربية 🛢️'));const different=model.normalize([{...e,id:'offset',startAt:'2026-11-20T19:00:00-05:00',published:true}]).events[0];assert.match(model.calendarFile(different),/DTSTART:20261121T000000Z/);});
+test('UTF-8 folding uses at most 75 octets and CRLF, preserves Unicode',()=>{const e={...event(),topic:'مرحبا 🛢️ '.repeat(40)},ics=model.calendarFile(e);for(const line of ics.split('\r\n'))assert.ok(Buffer.byteLength(line,'utf8')<=75);assert.equal(ics.replace(/\r\n/g,'').includes('\n'),false);assert.ok(ics.endsWith('END:VCALENDAR\r\n'));assert.ok(unfold(ics).includes('SUMMARY:'+e.topic));});
+test('UID is stable across downloads and calendar contains no hidden destination at any time',()=>{const e=event();const before=unfold(model.calendarFile(e,e.start-1)),after=unfold(model.calendarFile(e,e.start+1));assert.equal(before.match(/UID:(.*)/)[1],after.match(/UID:(.*)/)[1]);assert.ok(!after.includes(e.destinationUrl));});

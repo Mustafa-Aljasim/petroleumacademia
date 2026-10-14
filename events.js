@@ -8,6 +8,14 @@
     ar:{loading:'جارٍ تحميل الفعاليات…',empty:'لا توجد فعاليات منشورة حاليًا.',detail:'عد لاحقًا للاطلاع على إعلانات المحاضرات والدورات.',error:'تعذّر تحميل الفعاليات. يرجى التحديث أو المحاولة لاحقًا.',invalid:'بعض الفعاليات غير متاحة بسبب نقص بياناتها.',ended:'انتهت الفعالية',available:'متاح الآن',endedHeading:'الفعاليات السابقة',join:'انضم إلى الفعالية',unavailable:'رابط الفعالية غير متاح.',time:'توقيت بغداد (UTC+03:00)',instructor:'المحاضر',units:['أيام','ساعات','دقائق','ثوانٍ'],tab:'يفتح في علامة تبويب جديدة'}
   };
   const node = (tag,text,cls) => { const el = document.createElement(tag); el.textContent = text; if(cls)el.className=cls; return el; };
+  const downloadCalendar = event => {
+    if(model.stateAt(event,Date.now())==='ended'){tick();return;}
+    const blob=new Blob([model.calendarFile(event)],{type:'text/calendar;charset=utf-8'});
+    const url=URL.createObjectURL(blob),link=document.createElement('a');
+    link.href=url;link.download=`petroleum-academia-${event.id.replace(/[^a-zA-Z0-9_-]/g,'-').slice(0,80)}.ics`;
+    document.body.append(link);link.click();link.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),30000);
+  };
   const tick = () => {
     const now = Date.now(), lang = window.PA_LANGUAGE === 'ar' ? 'ar':'en', t=words[lang];
     const nextSignature = `${loadState}/${lang}/${entries.map(e=>model.stateAt(e,now)).join('/')}`;
@@ -25,12 +33,19 @@
         if(state==='upcoming'){
           const group=node('div','','countdown');group.setAttribute('role','group');group.setAttribute('aria-label',lang==='ar'?'الوقت المتبقي':'Time remaining');group.setAttribute('aria-live','off');
           const values=t.units.map(unit=>{const part=node('div',''),value=node('strong','0');part.append(value,node('span',unit));group.append(part);return value;});card.append(group);counters.push({event,values});
+          const registration=model.httpUrl(event.registrationUrl);
+          if(registration){const link=node('a',lang==='ar'?'عرض التفاصيل / التسجيل ↗':'View details / Register ↗','button primary event-registration');link.href=registration;link.target='_blank';link.rel='noopener noreferrer';link.setAttribute('aria-label',`${lang==='ar'?'عرض التفاصيل / التسجيل':'View details / Register'}: ${localized('topic')} (${t.tab})`);card.append(link);}
         } else {
           const status=node('p',state==='ended'?t.ended:t.available,'event-status');status.setAttribute('role','status');card.append(status);
           if(state==='available'){
             if(event.url){const link=node('a',`${localized('buttonLabel')||t.join} ↗`,'button primary');link.href=event.url;link.target='_blank';link.rel='noopener noreferrer';link.setAttribute('aria-label',`${localized('buttonLabel')||t.join}: ${localized('topic')} (${t.tab})`);card.append(link);}
             else card.append(node('p',t.unavailable));
           }
+        }
+        if(state!=='ended'){
+          const calendar=node('button',lang==='ar'?'أضف إلى التقويم':'Add to Calendar','button secondary event-calendar');calendar.type='button';
+          calendar.setAttribute('aria-label',`${lang==='ar'?'تحميل ملف التقويم':'Download calendar file'}: ${localized('topic')} (.ics)`);
+          calendar.addEventListener('click',()=>downloadCalendar(event));card.append(calendar);
         }
         (state==='ended'?past:grid).append(card);
       });
