@@ -8,7 +8,7 @@
     "category": "reservoir-engineering",
     "labels": ["DCA", "Reservoir engineering"],
     "url": "https://decline.streamlit.app/"
-  }
+  },
     {
     "published": true,
     "title": "Pressure Decline Calculator",
@@ -18,7 +18,7 @@
     "category": "reservoir-engineering",
     "labels": ["Pressure decline", "Reservoir engineering"],
     "url": "https://pressuredecline.streamlit.app/"
-  }
+  },
   {
     "published": true,
     "title": "Pressure Conversion to Datum",
