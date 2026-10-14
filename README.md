@@ -162,3 +162,29 @@ git push origin main
 ```
 
 Vercel automatically deploys main. Keep Other preset, repository root, empty build command and output `.`. No environment variables are needed for this hosted-service approach. Verify the matching commit becomes Ready in Vercel before checking the live routes. See the original README sections for tools/courses, contacts and DNS.
+# Home Featured Resource
+
+Edit the single object in `data/featured.json`. The supplied sample is unpublished and has no live URL. All six fields are required to display the card; `type` must be Tool, Course, Lecture or Resource. Use `published: false` to hide it. Example format (replace the illustrative text and URL before publishing):
+
+```json
+{
+  "published": false,
+  "type": "Resource",
+  "title": "Your actual resource title",
+  "description": "A short description of your resource.",
+  "url": "/tools/",
+  "buttonLabel": "Explore resource"
+}
+```
+
+`/tools/` is an existing site page; use the actual internal destination or a complete HTTP/HTTPS URL for your featured item. Set `published` to `true` only when the content is ready. Optional `_ar` counterparts for title, description and buttonLabel supply Arabic copy; otherwise the original text is retained. Content renders as plain text. Missing required content, unsafe URLs and loading failures keep the section hidden. Internal paths must begin with a single `/`; protocol-relative URLs, backslashes and credential-bearing URLs are rejected.
+
+Publish a content change with:
+
+```powershell
+git add data/featured.json
+git commit -m "Update featured resource"
+git push origin main
+```
+
+Wait for the matching Git commit to show Ready in Vercel, then refresh Home. Preview locally with the existing HTTP-server instructions. Only Home loads this file and displays the card directly below its hero.
