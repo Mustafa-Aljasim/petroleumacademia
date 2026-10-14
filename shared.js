@@ -1,7 +1,7 @@
 'use strict';
 (() => {
-  // One shared navigation and footer for all five static pages.
-  const routes = [['/', 'Home'], ['/tools/', 'Tools'], ['/courses/', 'Courses & Lectures'], ['/upcoming/', 'Upcoming Events'], ['/contact/', 'Contact']];
+  // Shared navigation and footer for every page.
+  const routes = [['/', 'Home'], ['/tools/', 'Tools'], ['/courses/', 'Courses & Lectures'], ['/resources/', 'Free Resources'], ['/upcoming/', 'Upcoming Events'], ['/contact/', 'Contact']];
   const nav = document.querySelector('nav');
   const toggle = document.getElementById('language-toggle');
   nav.replaceChildren();

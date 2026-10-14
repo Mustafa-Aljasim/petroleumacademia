@@ -1,6 +1,6 @@
 # Petroleum Academia
 
-Five static pages: `/`, `/tools/`, `/courses/`, `/upcoming/`, `/contact/`. Plain HTML, CSS and JavaScript; no build dependencies, website backend, analytics or cookies. Contact delivery uses Formspree after account setup. Noto Kufi Arabic is self-hosted with its license in `assets/fonts/`. Language choice is stored locally in the visitor’s browser.
+Six static pages: `/`, `/tools/`, `/courses/`, `/resources/`, `/upcoming/`, `/contact/`. Plain HTML, CSS and JavaScript; no build dependencies, website backend, analytics or cookies. Contact delivery uses Formspree after account setup. Noto Kufi Arabic is self-hosted with its license in `assets/fonts/`. Language choice is stored locally in the visitor’s browser.
 
 ## Preview locally
 
@@ -236,3 +236,47 @@ The calendar uses endAt when provided. Otherwise a positive numeric durationMinu
 Files use stable UIDs derived from event id plus petroleumacademia.com, escaped text, CRLF line endings and UTF-8-safe folding at 75 octets per physical line per RFC 5545 (https://www.rfc-editor.org/rfc/rfc5545). Keep event ids unchanged when editing the same event. Downloaded calendar entries do not update automatically when JSON changes; visitors must reimport updates (handling duplicate UIDs depends on their calendar app).
 
 Edit `data/events.json`, then commit and push to main using the existing instructions. Check with `node --test tests/calendar.test.cjs tests/events.test.cjs`.
+# Free Resources
+
+The sixth page is `/resources/`, with Free Resources in shared navigation/footer. Edit the array in `data/resources.json`. The two included samples are unpublished examples, not actual resources; no download files have been created or uploaded.
+
+Local file example (replace the text and filename with your actual resource):
+
+```json
+{
+  "id": "unique-local-resource-id",
+  "title": "Your actual resource title",
+  "description": "Optional description",
+  "category": "Optional category",
+  "format": "PDF",
+  "url": "/downloads/your-file.pdf",
+  "buttonLabel": "Download",
+  "published": false
+}
+```
+
+Place your chosen file in `downloads/` (subfolders are allowed), then enter its root-relative `/downloads/...` path. Match capitalization exactly for Vercel. A path can reference only a file inside downloads, with no traversal, backslashes, protocol-relative URLs or query/hash suffixes. Do not enable an entry until its actual file is committed. Local links use a download attribute; no existing files are automatically copied.
+
+External example (replace example.com with the real hosted resource URL):
+
+```json
+{
+  "id": "unique-external-resource-id",
+  "title": "Your actual externally hosted resource",
+  "url": "https://example.com/your-real-resource",
+  "buttonLabel": "Open Resource",
+  "published": false
+}
+```
+
+Title, unique id, valid URL and `published: true` are required. Description, category, format and buttonLabel are optional; empty fields disappear. Default button wording is Open Resource. Download wording is permitted only for local files or external URLs with a recognizable direct-file extension (XLSX, CSV, PDF, ZIP, etc.); otherwise it falls back to Open Resource. External links open securely in a new tab without forced downloads. Format is display text, not an inferred file or safety claim. Optional `_ar` text fields provide Arabic translations.
+
+**Add:** insert another object separated by a comma. **Edit:** change fields. **Reorder:** move objects within the array; page order follows the file. **Hide:** set published false. **Remove:** delete the object and its separating comma. You can leave an empty array to show the friendly empty state. Invalid entries are skipped; fetch/JSON failures show an error while navigation remains available. All text is rendered literally, never as HTML.
+
+```powershell
+git add data/resources.json downloads
+git commit -m "Update free resources"
+git push origin main
+```
+
+Check the matching Vercel deployment is Ready, then directly visit and refresh `/resources/` and test your real file links. Preview locally using the existing HTTP-server command. Files under downloads are public; add only files you intend to distribute.

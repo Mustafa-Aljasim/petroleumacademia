@@ -1,0 +1,22 @@
+[
+  {
+    "id": "unpublished-local-example",
+    "title": "Local resource example — replace before publishing",
+    "description": "Place your actual file in downloads before enabling this entry.",
+    "category": "Example category",
+    "format": "PDF",
+    "url": "/downloads/your-file.pdf",
+    "buttonLabel": "Download",
+    "published": false
+  },
+  {
+    "id": "unpublished-external-example",
+    "title": "External resource example — replace before publishing",
+    "description": "Replace this illustrative URL with your actual hosted resource.",
+    "category": "",
+    "format": "",
+    "url": "https://example.com/replace-with-real-resource",
+    "buttonLabel": "Open Resource",
+    "published": false
+  }
+]

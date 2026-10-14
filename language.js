@@ -3,6 +3,8 @@
   // English text is authored in index.html; its Arabic equivalents live here.
   // Keep dictionary keys in sync when changing English copy.
   const arabic = {
+    'Free Resources': 'المصادر المجانية', 'FREE RESOURCES': 'المصادر المجانية',
+    'Explore practical datasets, templates, and learning materials for petroleum engineering.': 'استكشف مجموعات بيانات وقوالب ومواد تعليمية عملية في هندسة النفط.',
     '100 characters maximum': 'الحد الأقصى 100 حرف', '160 characters maximum': 'الحد الأقصى 160 حرف', '5000 characters maximum': 'الحد الأقصى 5000 حرف',
     'Upcoming Events': 'الفعاليات القادمة', 'Contact': 'تواصل معنا',
     'UPCOMING EVENTS': 'الفعاليات القادمة', 'Make time for learning.': 'خصص وقتًا للتعلّم.',
@@ -119,7 +121,7 @@
     textEntries.forEach(entry => { entry.node.nodeValue = isArabic ? entry.translated : entry.original; });
     attributes.forEach(entry => entry.element.setAttribute(entry.name, isArabic ? entry.translated : entry.original));
     const pageName = document.getElementById('catalog')?.dataset.kind || document.body.dataset.page;
-    document.title = isArabic ? `${pageName === 'tools' ? 'الأدوات' : pageName === 'courses' ? 'الدورات والمحاضرات' : pageName === 'upcoming' ? 'الفعاليات القادمة' : pageName === 'contact' ? 'تواصل معنا' : 'تعليم عملي في هندسة النفط'} | بتروليوم أكاديميا` : originalTitle;
+    document.title = isArabic ? `${pageName === 'tools' ? 'الأدوات' : pageName === 'courses' ? 'الدورات والمحاضرات' : pageName === 'resources' ? 'المصادر المجانية' : pageName === 'upcoming' ? 'الفعاليات القادمة' : pageName === 'contact' ? 'تواصل معنا' : 'تعليم عملي في هندسة النفط'} | بتروليوم أكاديميا` : originalTitle;
     description.content = isArabic ? 'مصادر تعليمية ودورات وأدوات عملية في هندسة النفط مع التركيز على هندسة المكامن. تواصل مع بتروليوم أكاديميا.' : originalDescription;
     button.setAttribute('aria-label', isArabic ? 'Switch to English' : 'التبديل إلى العربية');
     button.title = isArabic ? 'Switch to English' : 'التبديل إلى العربية';
