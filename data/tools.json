@@ -28,5 +28,15 @@
     "category": "reservoir-engineering",
     "labels": ["Pressure conversion", "Reservoir engineering"],
     "url": "https://prtodatum.streamlit.app/"
+  },
+    {
+    "published": true,
+    "title": "اداة التحقق من دقة التقالرير المختبرية",
+    "title_ar": "Tool to Assist in QC of PVT laboratory reports.",
+    "description": "This application is designed to help doing consistency check for PVT lab reports.",
+    "description_ar": "صُمم هذا التطبيق للمساعدف في التحقق من دقة النتائج في تقرير المائع الهيدروكاربوني.",
+    "category": "reservoir-engineering",
+    "labels": ["PVT", "Reservoir engineering"],
+    "url": "https://pvtsampleqc.streamlit.app/"
   }
 ]
