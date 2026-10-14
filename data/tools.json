@@ -9,4 +9,24 @@
     "labels": ["DCA", "Reservoir engineering"],
     "url": "https://decline.streamlit.app/"
   }
+    {
+    "published": true,
+    "title": "Pressure Decline Calculator",
+    "title_ar": "حساب انخفاض الضغط",
+    "description": "This tools helps you calculate decline by time and decline by cumulative production, in addition to flexibility of adding up to 3 trends",
+    "description_ar": "اداة هندسية تساعد تساعدك هذه الأداة على حساب معدل انخفاض الضغط بدلالة الزمن وبدلالة الإنتاج التراكمي، بالإضافة إلى إتاحة المرونة لإضافة ما يصل إلى ثلاثة احتمالات ",
+    "category": "reservoir-engineering",
+    "labels": ["Pressure decline", "Reservoir engineering"],
+    "url": "https://pressuredecline.streamlit.app/"
+  }
+  {
+    "published": true,
+    "title": "Pressure Conversion to Datum",
+    "title_ar": "تحويل قراءة الضغط الى عمق معين",
+    "description": "This application is designed to convert reservoir pressure to datum depth of any reservoir",
+    "description_ar": "صُمم هذا التطبيق لتحويل ضغط المكمن إلى قيمته عند عمق مرجعي لأي مكمن.",
+    "category": "reservoir-engineering",
+    "labels": ["Pressure conversion", "Reservoir engineering"],
+    "url": "https://prtodatum.streamlit.app/"
+  }
 ]
