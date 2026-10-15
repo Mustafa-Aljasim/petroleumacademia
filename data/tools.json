@@ -31,12 +31,22 @@
   },
     {
     "published": true,
-    "title": "اداة التحقق من دقة التقالرير المختبرية",
-    "title_ar": "Tool to Assist in QC of PVT laboratory reports.",
+    "title": "Tool to Assist in QC of PVT laboratory reports",
+    "title_ar": "اداة التحقق من دقة التقارير المختبرية",
     "description": "This application is designed to help doing consistency check for PVT lab reports.",
     "description_ar": "صُمم هذا التطبيق للمساعدف في التحقق من دقة النتائج في تقرير المائع الهيدروكاربوني.",
     "category": "reservoir-engineering",
     "labels": ["PVT", "Reservoir engineering"],
     "url": "https://pvtsampleqc.streamlit.app/"
+  },
+    {
+    "published": true,
+    "title": "Reservoir Mapping Studio",
+    "title_ar": "استديو رسم الخرائط المكمنية",
+    "description": "Reservoir Mapping Studio is a production-oriented Streamlit application for building and comparing 2D reservoir property maps from well observations.",
+    "description_ar": "هو تطبيق موجه للإنتاج لإنشاء ومقارنة خرائط خصائص المكامن ثنائية الأبعاد",
+    "category": "reservoir-engineering",
+    "labels": ["Reservoir mapping", "Geological mapping"],
+    "url": "https://reservoirmaps.streamlit.app/"
   }
 ]
