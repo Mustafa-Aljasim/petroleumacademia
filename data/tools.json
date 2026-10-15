@@ -48,5 +48,15 @@
     "category": "reservoir-engineering",
     "labels": ["Reservoir mapping", "Geological mapping"],
     "url": "https://reservoirmaps.streamlit.app/"
+  },
+    {
+    "published": true,
+    "title": "ٍSaturation Mapping Studio",
+    "title_ar": "استديو رسم خرائط التشبع النفطي",
+    "description": "Saturation Mapping Studio is an application for creating professional 2D water-saturation (Sw) maps from well data and engineering control points",
+    "description_ar": "تطبيق مخصص لانشاء خرائط احترافية ثنائية الابعاد لتشبع المياه وذلك استنادا الى بيانات الابار ونقاط التحكم الهندسية",
+    "category": "reservoir-engineering",
+    "labels": ["Reservoir mapping", "Geological mapping"],
+    "url": "https://satmap.streamlit.app/"
   }
 ]
