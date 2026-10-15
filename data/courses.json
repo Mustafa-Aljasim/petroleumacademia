@@ -13,5 +13,20 @@
     "url": "",
     "buttonLabel": "",
     "buttonLabel_ar": ""
+  },
+    {
+    "published": true,
+    "title": "Applied Reservoir Management",
+    "title_ar":  "دورة الادارة المكمنية التطبيقية",
+    "description": "This course provides a practical, data-driven approach to reservoir engineering, focusing on how to interpret, integrate, and act on pressure, production, and injection data to optimize reservoir performance.",
+    "description_ar": "تقدم هذه الدورة نهجاً عملياً قائماً على البيانات في هندسة المكامن، مع التركيز على كيفية تفسير بيانات الضغط والإنتاج والحقن، ودمجها، واتخاذ إجراءات بناءً عليها؛ وذلك بهدف تحسين أداء المكمن.",
+    "instructor": "Mustafa A. Aljasim",
+    "format": "",
+    "date": "Soon",
+    "price": "10$",
+    "status": "Upcoming",
+    "url": "",
+    "buttonLabel": "",
+    "buttonLabel_ar": ""
   }
 ]
