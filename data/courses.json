@@ -1,17 +1,32 @@
 [
   {
-    "published": false,
-    "title": "Sample course or lecture — replace before publishing",
-    "title_ar": "مثال لدورة أو محاضرة — يُستبدل قبل النشر",
-    "description": "Optional short description.",
-    "description_ar": "وصف مختصر اختياري.",
-    "instructor": "",
-    "format": "",
-    "date": "",
-    "price": "",
+    "published": true,
+    "title": "Introduction to Pressure Transient Analysis",
+    "title_ar":  "تحليل تغيرات الضغط",
+    "description": "This course is taking you through the basic of pressure transient analysis, importing data, QC data, identify ETR, MDT, and LTR. Single and Multi-phase flow, and taking students through different PBU examples",
+    "description_ar": "تتناول هذه الدورة أساسيات تحليل الضغط العابر، واستيراد البيانات، ومراقبة جودة البيانات، وتحديد معدل انتقال الحرارة الفعال (ETR)، ​​(MDT)، (LTR). كما تتناول الدورة التدفق أحادي ومتعدد الأطوار، وتقدم للطلاب أمثلة متنوعة لوحدات قياس الضغط (PBU).",
+    "instructor": "Mustafa A. Aljasim",
+    "format": "ONLINE-5 Sessions",
+    "date": "Soon",
+    "price": "25$",
     "status": "Upcoming",
-    "url": "",
-    "buttonLabel": "",
-    "buttonLabel_ar": ""
+    "url": "https://www.instagram.com/petroleum_academia/",
+    "buttonLabel": "Click Here",
+    "buttonLabel_ar": "اضغط هنا"
+  },
+    {
+    "published": true,
+    "title": "Applied Reservoir Management",
+    "title_ar":  "دورة الادارة المكمنية التطبيقية",
+    "description": "This course provides a practical, data-driven approach to reservoir engineering, focusing on how to interpret, integrate, and act on pressure, production, and injection data to optimize reservoir performance.",
+    "description_ar": "تقدم هذه الدورة نهجاً عملياً قائماً على البيانات في هندسة المكامن، مع التركيز على كيفية تفسير بيانات الضغط والإنتاج والحقن، ودمجها، واتخاذ إجراءات بناءً عليها؛ وذلك بهدف تحسين أداء المكمن.",
+    "instructor": "Mustafa A. Aljasim",
+    "format": "ONLINE-5 Sessions",
+    "date": "Soon",
+    "price": "25$",
+    "status": "Upcoming",
+    "url": "https://www.instagram.com/petroleum_academia/",
+    "buttonLabel": "Click Here",
+    "buttonLabel_ar": "اضغط هنا"
   }
 ]

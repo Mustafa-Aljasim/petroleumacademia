@@ -1,12 +1,62 @@
 [
   {
-    "published": false,
-    "title": "Sample tool — replace before publishing",
-    "title_ar": "مثال لأداة — يُستبدل قبل النشر",
-    "description": "Optional short description.",
-    "description_ar": "وصف مختصر اختياري.",
-    "category": "Example category — replace before publishing",
-    "labels": ["Example label", "Replace with actual details"],
-    "url": ""
+    "published": true,
+    "title": "Interactive Decline Curve Analysis + WOR Forecast",
+    "title_ar": "تحليل منحنى التناقص التفاعلي",
+    "description": "This tools helps you calculate the decline using different methods, as well as water-cut forecasting",
+    "description_ar": "اداة هندسية تساعد في حساب معدل التناقص في الانتاج باستخدام عدة طرق بالاضافة الى حساب نسبة تصاعد الماء بالنسبة للنفط",
+    "category": "reservoir-engineering",
+    "labels": ["DCA", "Reservoir engineering"],
+    "url": "https://decline.streamlit.app/"
+  },
+    {
+    "published": true,
+    "title": "Pressure Decline Calculator",
+    "title_ar": "حساب انخفاض الضغط",
+    "description": "This tools helps you calculate decline by time and decline by cumulative production, in addition to flexibility of adding up to 3 trends",
+    "description_ar": "اداة هندسية تساعد تساعدك هذه الأداة على حساب معدل انخفاض الضغط بدلالة الزمن وبدلالة الإنتاج التراكمي، بالإضافة إلى إتاحة المرونة لإضافة ما يصل إلى ثلاثة احتمالات ",
+    "category": "reservoir-engineering",
+    "labels": ["Pressure decline", "Reservoir engineering"],
+    "url": "https://pressuredecline.streamlit.app/"
+  },
+  {
+    "published": true,
+    "title": "Pressure Conversion to Datum",
+    "title_ar": "تحويل قراءة الضغط الى عمق معين",
+    "description": "This application is designed to convert reservoir pressure to datum depth of any reservoir",
+    "description_ar": "صُمم هذا التطبيق لتحويل ضغط المكمن إلى قيمته عند عمق مرجعي لأي مكمن.",
+    "category": "reservoir-engineering",
+    "labels": ["Pressure conversion", "Reservoir engineering"],
+    "url": "https://prtodatum.streamlit.app/"
+  },
+    {
+    "published": true,
+    "title": "Tool to Assist in QC of PVT laboratory reports",
+    "title_ar": "اداة التحقق من دقة التقارير المختبرية",
+    "description": "This application is designed to help doing consistency check for PVT lab reports.",
+    "description_ar": "صُمم هذا التطبيق للمساعدف في التحقق من دقة النتائج في تقرير المائع الهيدروكاربوني.",
+    "category": "reservoir-engineering",
+    "labels": ["PVT", "Reservoir engineering"],
+    "url": "https://pvtsampleqc.streamlit.app/"
+  },
+    {
+    "published": true,
+    "title": "Reservoir Mapping Studio",
+    "title_ar": "استديو رسم الخرائط المكمنية",
+    "description": "Reservoir Mapping Studio is a production-oriented Streamlit application for building and comparing 2D reservoir property maps from well observations.",
+    "description_ar": "هو تطبيق موجه للإنتاج لإنشاء ومقارنة خرائط خصائص المكامن ثنائية الأبعاد",
+    "category": "reservoir-engineering",
+    "labels": ["Reservoir mapping", "Geological mapping"],
+    "url": "https://reservoirmaps.streamlit.app/"
+  },
+    {
+    "published": true,
+    "title": "Saturation Mapping Studio",
+    "title_ar": "استديو رسم خرائط التشبع النفطي",
+    "description": "Saturation Mapping Studio is an application for creating professional 2D water-saturation (Sw) maps from well data and engineering control points",
+    "description_ar": "تطبيق مخصص لانشاء خرائط احترافية ثنائية الابعاد لتشبع المياه وذلك استنادا الى بيانات الابار ونقاط التحكم الهندسية",
+    "category": "reservoir-engineering",
+    "labels": ["Reservoir mapping", "Geological mapping"],
+    "url": "https://satmap.streamlit.app/"
   }
 ]
