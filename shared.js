@@ -1,7 +1,7 @@
 'use strict';
 (() => {
   // Shared navigation and footer for every page.
-  const routes = [['/', 'Home'], ['/tools/', 'Tools'], ['/courses/', 'Courses & Lectures'], ['/resources/', 'Free Resources'], ['/upcoming/', 'Upcoming Events'], ['/contact/', 'Contact']];
+  const routes = [['/', 'Home'], ['/tools/', 'Tools'], ['/courses/', 'Courses & Lectures'], ['/resources/', 'Free Resources'], ['/learning-posts/', 'Learning Posts'], ['/upcoming/', 'Upcoming Events'], ['/contact/', 'Contact']];
   const nav = document.querySelector('nav');
   const toggle = document.getElementById('language-toggle');
   nav.replaceChildren();

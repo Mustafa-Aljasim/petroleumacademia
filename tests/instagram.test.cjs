@@ -1,0 +1,31 @@
+const {test}=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');const vm=require('node:vm');const model=require('../instagram-model.js');
+const sample=(i=1)=>({id:`fixture-${i}`,title:`QA fixture ${i}`,date:`2026-10-${String(i).padStart(2,'0')}`,instagramUrl:`https://www.instagram.com/${i%2?'p':'reel'}/QA_ONLY_${i}/`,published:true});
+const flush=()=>new Promise(resolve=>setImmediate(resolve));
+test('strict post/Reel validation canonicalizes copied URLs without tracking parameters',()=>{assert.equal(model.permalink('https://instagram.com/p/ABC_123-/?igsh=tracking#fragment'),'https://www.instagram.com/p/ABC_123-/');for(const url of ['javascript:alert(1)','http://www.instagram.com/p/ABC/','https://instagram.com.evil.example/p/ABC/','https://user@instagram.com/p/ABC/','https://www.instagram.com:444/p/ABC/','https://www.instagram.com/petroleum_academia/','https://www.instagram.com/stories/name/123/','https://www.instagram.com/p/ABC/embed/','https://www.instagram.com/p/%41BC/','//instagram.com/p/ABC/','https://www.instagram.com/p/../p/ABC/'])assert.equal(model.permalink(url),null,url);});
+test('dates, ordering, unpublished/invalid items and pagination beyond six',()=>{const rows=[...Array.from({length:13},(_,i)=>sample(i+1)),{...sample(14),published:false},{...sample(15),date:'2026-02-30'},sample(1)];const result=model.normalize(rows);assert.equal(result.invalid,2);assert.equal(result.posts.length,13);assert.equal(result.posts[0].id,'fixture-13');assert.equal(model.paginate(result.posts,1).posts.length,6);assert.equal(model.paginate(result.posts,2).posts[0].id,'fixture-7');assert.equal(model.paginate(result.posts,3).posts.length,1);assert.equal(model.paginate(result.posts,999).page,3);assert.equal(model.paginate(result.posts,NaN).page,1);});
+async function setup(data,{failure=false,noObserver=false}={}){
+  const observations=[],events={};let processes=0;
+  class Element{
+    constructor(tag){this.tag=tag;this.children=[];this.dataset={};this.attributes={};this.isConnected=true;this.listeners={};}
+    append(...nodes){this.children.push(...nodes);}
+    replaceChildren(){const detach=e=>{e.isConnected=false;e.children.forEach(detach);};this.children.forEach(detach);this.children=[];}
+    setAttribute(k,v){this.attributes[k]=v;}
+    addEventListener(k,fn){this.listeners[k]=fn;}
+    querySelector(selector){return all(this).find(e=>e.className?.split(' ').includes(selector.slice(1)))||null;}
+    focus(){document.activeElement=this;}
+  }
+  const root=new Element('div'),head=new Element('head');
+  const document={getElementById:()=>root,createElement:tag=>new Element(tag),head,addEventListener:(name,fn)=>events[name]=fn};
+  const location={href:'https://petroleumacademia.com/learning-posts/'};
+  const window={PA_INSTAGRAM:model,PA_LANGUAGE:'en',addEventListener:(name,fn)=>events[name]=fn};
+  class Observer{constructor(fn){this.fn=fn;this.targets=[];observations.push(this);}observe(target){this.targets.push(target);}unobserve(){}disconnect(){this.disconnected=true;}}
+  const context={URL,Intl,Date,window,document,location,history:{pushState(_s,_t,url){location.href=String(url);}},setTimeout:()=>0,clearTimeout(){},fetch:async()=>{if(failure)throw Error();return{ok:true,json:async()=>data};}};
+  if(!noObserver)context.IntersectionObserver=Observer;
+  vm.runInNewContext(fs.readFileSync('learning-posts.js','utf8'),context);await flush();
+  return {root,head,window,document,observations,location,events,enableScript(){window.instgrm={Embeds:{process(){processes++;}}};head.children[0].onload();},processes:()=>processes};
+}
+function all(e){return [e,...e.children.flatMap(all)];}
+test('only current-page metadata mounts; offscreen slots never load script until observed',async()=>{const s=await setup(Array.from({length:13},(_,i)=>sample(i+1)));assert.equal(all(s.root).filter(e=>e.tag==='article').length,6);assert.equal(s.head.children.length,0);assert.equal(all(s.root).filter(e=>e.tag==='blockquote').length,0);const observer=s.observations.at(-1);observer.fn([{target:observer.targets[0],isIntersecting:true}]);assert.equal(s.head.children.length,1);assert.equal(s.head.children[0].src,'https://www.instagram.com/embed.js');assert.equal(all(s.root).filter(e=>e.tag==='blockquote').length,1);observer.fn([{target:observer.targets[1],isIntersecting:true}]);assert.equal(s.head.children.length,1);s.enableScript();await flush();assert.ok(s.processes()>0);const next=all(s.root).find(e=>e.tag==='button'&&e.textContent==='Next page');next.listeners.click();assert.equal(all(s.root).filter(e=>e.tag==='article').length,6);assert.equal(all(s.root).filter(e=>e.tag==='blockquote').length,0);assert.match(s.document.activeElement.textContent,/Posts 7–12/);assert.ok(s.location.href.endsWith('?page=2'));const nextObserver=s.observations.at(-1);nextObserver.fn([{target:nextObserver.targets[0],isIntersecting:true}]);await flush();assert.equal(s.head.children.length,1);});
+test('fallbacks remain usable after script failure and text is literal',async()=>{const s=await setup([{...sample(),title:'<b>literal</b>',category:'<img src=x>'}]);const observer=s.observations.at(-1);observer.fn([{target:observer.targets[0],isIntersecting:true}]);s.head.children[0].onerror();await flush();const links=all(s.root).filter(e=>e.className?.includes('post-fallback'));assert.equal(links.length,1);assert.equal(links[0].rel,'noopener noreferrer');assert.equal(all(s.root).find(e=>e.tag==='h3').textContent,'<b>literal</b>');assert.match(s.root.querySelector('.embed-service-note').textContent,/blocked or unavailable/);});
+test('empty/invalid data and fetch failures do not load Instagram',async()=>{for(const [data,options] of [[[],{}],[[{...sample(),instagramUrl:'https://example.com'}],{}],[{},{}],[[],{failure:true}]]){const s=await setup(data,options);assert.equal(s.head.children.length,0);assert.equal(all(s.root).filter(e=>e.tag==='article').length,0);assert.ok(all(s.root).some(e=>e.tag==='h2'));}});
+test('no-observer browsers still mount only six and one script',async()=>{const s=await setup(Array.from({length:13},(_,i)=>sample(i+1)),{noObserver:true});assert.equal(all(s.root).filter(e=>e.tag==='blockquote').length,6);assert.equal(s.head.children.length,1);});

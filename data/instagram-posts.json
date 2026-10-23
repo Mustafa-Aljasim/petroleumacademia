@@ -1,0 +1,18 @@
+[
+  {
+    "id": "unpublished-post-example",
+    "title": "Example post title — replace before publishing",
+    "date": "2026-10-23",
+    "category": "Example category",
+    "instagramUrl": "",
+    "published": false
+  },
+  {
+    "id": "unpublished-reel-example",
+    "title": "Example Reel title — replace before publishing",
+    "date": "2026-10-23",
+    "category": "",
+    "instagramUrl": "",
+    "published": false
+  }
+]

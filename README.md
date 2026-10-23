@@ -1,6 +1,6 @@
 # Petroleum Academia
 
-Six static pages: `/`, `/tools/`, `/courses/`, `/resources/`, `/upcoming/`, `/contact/`. Plain HTML, CSS and JavaScript; no build dependencies, website backend, analytics or cookies. Contact delivery uses Formspree after account setup. Noto Kufi Arabic is self-hosted with its license in `assets/fonts/`. Language choice is stored locally in the visitor’s browser.
+Seven static pages: `/`, `/tools/`, `/courses/`, `/resources/`, `/learning-posts/`, `/upcoming/`, `/contact/`. Plain HTML, CSS and JavaScript; no build dependencies or website backend. No site analytics are added; Learning Posts loads third-party Instagram content as described below. Contact delivery uses Formspree after account setup. Noto Kufi Arabic is self-hosted with its license in `assets/fonts/`. Language choice is stored locally in the visitor’s browser.
 
 ## Preview locally
 
@@ -298,3 +298,39 @@ Edit the array in `data/faq.json`. The four initial published questions use the 
 Questions use native HTML details/summary: Tab focuses each summary, Enter or Space expands/collapses it, and multiple answers can stay open. Visible focus and responsive text styles are included. No pricing, certificate or accreditation policies are inferred.
 
 Publish with `git add data/faq.json`, `git commit -m "Update FAQ"`, `git push origin main`, then verify Vercel is Ready and refresh Home. Run `node --test tests/faq.test.cjs` for rendering, ordering and hidden/error states.
+# Learning Posts — curated Instagram embeds
+
+Visit `/learning-posts/`. This is a **manually curated list, not an automatic Instagram feed**. You only edit `data/instagram-posts.json`; never paste embed HTML. No Instagram API token, scraper, image downloads or third-party feed service is used.
+
+1. Open a public Petroleum Academia post or Reel in Instagram. Use its Share/three-dot menu → **Copy link** (or copy the permalink from a browser).
+2. Copy an unpublished object in `data/instagram-posts.json`, give it a unique id, title and actual post date (`YYYY-MM-DD`), add an optional category, and paste the copied link into instagramUrl.
+3. Set published true only when it is ready. Example format below uses a placeholder, not a real URL:
+
+```json
+{
+  "id": "your-unique-post-id",
+  "title": "Your actual post title",
+  "date": "2026-10-23",
+  "category": "Optional category",
+  "instagramUrl": "PASTE_COPIED_POST_OR_REEL_URL_HERE",
+  "published": false
+}
+```
+
+The date shown is an example. Supported URLs are HTTPS instagram.com or www.instagram.com permalinks with `/p/{shortcode}/` or `/reel/{shortcode}/`. Tracking query parameters/fragments are removed. Profile, Story, embed-page, redirect and unsafe URLs are rejected. The included post/Reel samples have blank URLs and remain unpublished; no actual post URL has been invented. Optional title_ar and category_ar provide Arabic copy.
+
+**Publish:** set published true. **Hide:** set false. **Edit:** change fields. **Remove:** delete an object and its separating comma. Valid published posts sort newest first by date, with six per page. Array order breaks equal-date ties. Invalid dates/URLs and duplicate ids/permalinks are skipped. Empty archives show a friendly message; failed JSON requests show an error without affecting navigation.
+
+The Instagram account must be **public and allow embedding**. Deleted, private, age-restricted or otherwise restricted content may stop displaying. No script can guarantee that a particular post will render. Every card retains an Open on Instagram link outside the embed. This link and your title/date remain usable if Instagram or a privacy blocker prevents embedding. Only the current page's embeds mount, and offscreen slots wait until within 200 pixels of the viewport. Older browsers without IntersectionObserver mount just the current six. Script loading occurs once per page visit, only on Learning Posts, after a slot approaches the viewport; it is not loaded for an empty list. Pagination updates `?page=`, supports browser Back/Forward, and focuses the results heading. There is no automatic retry loop.
+
+Instagram's official blockquote markup and embed.js own the post presentation/controls. We call `instgrm.Embeds.process()` after mounting slots/page changes; script execution is **not** proof that a particular post loaded. This page loads content from Instagram and Instagram may receive visitor data or use cookies/storage. The rest of the site does not load the Instagram script. No site analytics were added. Page-specific CSP allows Instagram scripts/frames and embed inline styles while preserving the existing policy on other routes.
+
+Official Meta documentation checked October 23, 2026: [Embed Button](https://developers.facebook.com/documentation/instagram-platform/embed-button) (updated June 30, 2026) and [oEmbed / Embed JS](https://developers.facebook.com/documentation/instagram-platform/oembed). The latter documents the supported post/Reel permalink forms and manual `instgrm.Embeds.process()` initialization. This site uses the browser embed script, not the token-based oEmbed API.
+
+```powershell
+git add data/instagram-posts.json
+git commit -m "Update curated learning posts"
+git push origin main
+```
+
+Wait for the matching commit to be Ready in Vercel, then open and refresh `/learning-posts/`. Preview through the existing local HTTP-server workflow. Run `node --test tests/instagram.test.cjs` for URL validation, sorting, pagination, lazy mounting, one-script behavior and blocked-service fallbacks. Live embed verification remains pending until an actual eligible Instagram URL is supplied; local fixtures test integration behavior without claiming real content loaded.
