@@ -1,18 +1,18 @@
 [
   {
-    "id": "unpublished-post-example",
-    "title": "Example post title — replace before publishing",
-    "date": "2026-10-23",
-    "category": "Example category",
-    "instagramUrl": "",
-    "published": false
+    "id": "1",
+    "title": "Multi-phase versus Single-phase Analysis in PTA",
+    "date": "2026-10-13",
+    "category": "PTA",
+    "instagramUrl": "https://www.instagram.com/p/DecCdwnjAEn/?utm_source=ig_web_copy_link&mdxt=MzRlODBiNWFlZA==&srtk=MzRlODBiNWFlZA==",
+    "published": true
   },
   {
-    "id": "unpublished-reel-example",
-    "title": "Example Reel title — replace before publishing",
-    "date": "2026-10-23",
-    "category": "",
-    "instagramUrl": "",
-    "published": false
+    "id": "2",
+    "title": "PVT Data Quality Control (QC)",
+    "date": "2026-10-12",
+    "category": "PVT",
+    "instagramUrl": "https://www.instagram.com/p/DeZusQ_DGSo/?utm_source=ig_web_copy_link&cplk=MzRlODBiNWFlZA==&srtk=MzRlODBiNWFlZA==",
+    "published": true
   }
 ]
